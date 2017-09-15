@@ -4,7 +4,7 @@
 # ■ Mars_Core
 #==============================================================================
 module Mars_Core
-	# TODO Make initialize crash
+	# TODO Make initialize crash or at least throw a warning
 	
 	## This should hold an instance of every inheritor of Mars_Rule_Base
 	@@allRules = Array.new()
@@ -80,17 +80,17 @@ module Mars_Core
 	#
 	#
 	#		String notes
-	# This is the enemy's notes object. Just pass this directly in.
+	# This is the enemy's "note" object. Just pass this directly in.
 	#
 	#	Returns:
 	#		Array<Array<String>>
 	# This table is the rules. It's formatted as one rule per outer index, and
 	# then that rule's words per inner index.
-	def interpret_notes(notes)
+	def self.interpret_notes(notes)
 		found_mars_config_start = false
-		@rules = Array.new()	# Reinit the list; we don't want duplicates
+		rules = Array.new()	# Reinit the list; we don't want duplicates
 		
-		note.each_line do |line|
+		notes.each_line do |line|
 			# Only process lines if we've found a mars config tag
 			if(found_mars_config_start || line.downcase[/^<mars>/]) then
 				if(line.downcase[/^<mars-end-config>/]) then
@@ -101,16 +101,18 @@ module Mars_Core
 					words.reject! { |word| word == "" }
 					words.reject! { |word| word.downcase[/<mars>/] }
 					
-					# Ignore comments
+					# Ignore comments and blank lines
 					if(words[0] != "#" and words.size > 0) then
 						# Add the line to our list of rules
-						@rules[@rules.size] = words
+						rules[rules.size] = words
 					end
 				end
 			elsif(line.downcase[/^<mars-config>/]) then
 				found_mars_config_start = true
 			end
 		end
+		
+		return rules
 	end
 	
 end # class Mars_Core
