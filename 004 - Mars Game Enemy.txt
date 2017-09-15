@@ -1,0 +1,78 @@
+#==============================================================================
+# ■ Game_Enemy
+#==============================================================================
+class Game_Enemy < Game_Battler
+	
+	# Class variables:
+	
+	#		Array<String> @rules
+	# This is the list of rules. It's a 2D array, with the first index being
+	# a given rule and the second being the rule and its options.
+	# Be wary that this may be nil. If it is, then the enemy lacks any options.
+	
+	alias mars_initialize initialize
+	def initialize(index, enemy_id)
+		# Unfortunately, Game_Enemy's initialize
+		# requires some arguments, so this isn't nice and clean
+		mars_initialize(index, enemy_id)
+		
+		interpret_notes
+		
+		p(@rules)
+	end
+	
+	## add_rule:
+	# Adds the given list of args as a new set.
+	#
+	#  words:	An array. First is the rule; the rest are options.
+	#					If this is empty, then nothing happens.
+	def add_rule(words)
+		if(words.size > 0)
+			@rules[@rules.size] = words
+		end
+	end
+	
+	# This interprets the notes for an enemy when called. It will load all
+	# of the Mars engine options for that enemy as separate arrays of strings.
+	# It will read lines under two conditions:
+	#  1: The line starts with <mars>
+	#  2: The line falls between lines with <mars-config> and <mars-end-config>
+	#
+	# However, in either case, empty lines are ignored. Also, all lines starting
+	# with '#' are ignored. (NOTE THAT THIS DOES NOT APPLY TO '#' SYMBOLS AFTER
+	# THE START OF THE LINE!)
+	def interpret_notes
+		found_mars_config_start = false
+		@rules = Array.new()	# Reinit the list; we don't want duplicates
+		
+		note.each_line do |line|
+			# Only process lines if we've found a mars config tag
+			if(found_mars_config_start || line.downcase[/^<mars>/]) then
+				if(line.downcase[/^<mars-end-config>/]) then
+					found_mars_config_start = false
+				else
+					# Split the line into words
+					words = line.scan(/[a-zA-Z0-9<>#]*/)
+					words.reject! { |word| word == "" }
+					words.reject! { |word| word.downcase[/<mars>/] }
+					
+					# Ignore comments
+					if(words[0] != "#" and words.size > 0) then
+						# Add the line to our list of rules
+						@rules[@rules.size] = words
+					end
+				end
+			elsif(line.downcase[/^<mars-config>/]) then
+				found_mars_config_start = true
+			end
+		end
+	end
+	
+	alias mars_select_enemy_action select_enemy_action
+	def select_enemy_action(action_list, rating_zero)
+		p(action_list)
+		p(Mars_Core::ChooseAction(action_list, @rules))
+		action = mars_select_enemy_action(action_list, rating_zero)
+		return action
+	end
+end # End of class

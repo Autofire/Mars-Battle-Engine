@@ -1,0 +1,41 @@
+#==============================================================================
+# ■ Mars_Rule_Base
+#==============================================================================
+class Mars_Rule_Base
+	
+	### OVERRIDE THESE FUNCTIONS WHEN MAKING NEW RULES ###
+	
+	## Name?
+	# Given a rule name, returns true if this rule object matches with it.
+	#
+	#		String ruleName
+	# Name of rule.
+	#
+	# 	Returns:
+	# true	- This rule object can process this rule
+	# false	- This rule object cannot process this rule
+	def IsNamed?(ruleName)
+		return false
+	end
+	
+	## ProcessLine
+	# This is a virtual function that decides what to do given a line of text.
+	# 
+	#		Array<RPG::Enemy::Action> actions
+	#	All possible actions to choose from.
+	#	
+	#		Array<String> words
+	#	The first word is always the rule, while subsequent values (if any) are
+	#	arguments.
+	#
+	# 	Returns:
+	#	RPG::Enemy::Action	- Implies action to be run
+	# int									- Implies line to jump to
+	# nil									- This rule didn't trigger anything; try the next one
+	# anything else				- Yields undefined behaviour
+	def ProcessRule(actions, words)
+		return false
+	end
+	
+	
+end # End of class

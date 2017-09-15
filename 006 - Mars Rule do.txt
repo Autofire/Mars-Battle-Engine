@@ -1,0 +1,15 @@
+# Format:
+#		do <action index>
+
+class Mars_Rule_do < Mars_Rule_Base
+	def IsNamed?(ruleName)
+		return ruleName == "do"
+	end
+	
+	def ProcessRule(actions, words)
+		return actions[words[1].to_i]
+	end
+end
+
+Mars_Core::RegisterRule(Mars_Rule_do.new())
+p(Mars_Core::FindRule("do").is_a?(Mars_Rule_do))
