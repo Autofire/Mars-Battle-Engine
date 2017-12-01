@@ -1,3 +1,16 @@
+# About
+
+This is a side project of mine. I'm juggling it between school, my own projects,
+and everything else in my life. It's mainly for my younger brother, who likes
+RMVX Ace, but wants to be able to do more with the battle system.
+
+For more info, check the files with the unicode arrows. (Yes, I have unicode in
+the filenames. I know this is awful but this is how RMVX Ace handles its
+scripts.)
+
+
+# Installing and Maitainence
+
 These files need to be imported into RPGVXA in the order that they are
 presented. I would recommend using the [Gemini
 IDE](https://sourceforge.net/projects/geminieditor/) to do this. Note that these
@@ -9,12 +22,10 @@ Any empty files don't need to be imported but they are there to space scripts
 out and make it easier to read.
 
 Please note that this repo is *not* kept perfectly up to date! Due to the way
-RPGMakerVXA handles its scripts, it is a royal pain to dump the scripts into
-this folder. (As in, I have to export ALL scripts in the projects, copy only
-the ones for MaBE, and then rename each file, one at a time.)
+RMVX Ace handles its scripts, I cannot easily keep them all in my Github repo
+while working on them. Neither can I give them nice, space-free and Unicode-free
+names all of the time. However, I assure you that Gemini will properly import
+the files.
 
-It should be really straightforward to make a script to do this automatically,
-but I haven't done so yet. If I do ever get around to making this, I will make
-sure to add it to the repo.
-
-[This is the original forum post.](https://forums.rpgmakerweb.com/index.php?threads/mars-battle-engine.83341/)
+[This is the original forum
+post.](https://forums.rpgmakerweb.com/index.php?threads/mars-battle-engine.83341/)
