@@ -5,7 +5,9 @@ module Mars
 	module PreRules
 		class Base
 			
-			#TODO Finish this
+			# TODO: Finish this. It will be used as as pre-processor rule stuff. e.g.
+			# substituting values in at preprocessing time. This can be used to help
+			# clarify rules by turning attack numbers into attack names.
 			
 			### OVERRIDE THIS FUNCTION WHEN MAKING NEW RULES ###
 			
