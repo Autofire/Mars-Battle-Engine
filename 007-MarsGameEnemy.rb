@@ -16,16 +16,23 @@ class Game_Enemy < Game_Battler
 		# requires some arguments, so this isn't nice and clean
 		mars_initialize(index, enemy_id)
 		
-		@rules = Mars_Core::interpret_notes(note)
+		@rules = Mars::Core::interpret_notes(note)
 		
-		p(@rules)
+		Mars::Debug::Log(Mars::Debug::LOG_FULL, "All rules: " + @rules.to_s)
 	end
 	
 	alias mars_select_enemy_action select_enemy_action
 	def select_enemy_action(action_list, rating_zero)
-		p(action_list)
-		p(Mars_Core::ChooseAction(action_list, @rules))
-		action = mars_select_enemy_action(action_list, rating_zero)
+		Mars::Debug::Log(Mars::Debug::LOG_FULL, "All available actions: " + action_list.to_s)
+		action = Mars::Core::ChooseAction(action_list, @rules)
+		
+		if(action.nil?)
+			Mars::Debug::Log(1, "Mars failed to yield an action; falling back to RPGVXA")
+			action = mars_select_enemy_action(action_list, rating_zero)	
+		end
+		
+		Mars::Debug::Log(2, battler_name + " chooses " + action.to_s)
+		
 		return action
 	end
 end # End of class
