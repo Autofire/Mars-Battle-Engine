@@ -17,11 +17,11 @@ will be RMVX Ace.
 Furthermore, it should not get in the way of any other script that uses the note
 field. When scanning the notes field for rules, MaBE does the following:
 
-	1.	If a line begins with <mars-config> or <mars-end-config>, an internal
-	    flag is set. Then the interpreter continues to the next line.
-	2.	If a line begins <mars>, then the rest of it is read.
-	3.	If a line falls between a line with <mars-config> and <mars-end-config>,
-	    then is treated as if it started with <mars>.
+	1. If a line begins with <mars-config> or <mars-end-config>, an internal
+	   flag is set. Then the interpreter continues to the next line.
+	2. If a line begins <mars>, then the rest of it is read.
+	3. If a line falls between a line with <mars-config> and <mars-end-config>,
+	   then is treated as if it started with <mars>.
 
 (Note that, for for each of these rules, all checks are case-insensitive. That
 is, <mars>, <MARS>, and <Mars> are all considered identical. Choose your
